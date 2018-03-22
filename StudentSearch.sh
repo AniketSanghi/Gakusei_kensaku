@@ -6,6 +6,9 @@ add_end="&selstudnam="
 touch temp.txt
 touch Database.txt
 touch Stu_Database.txt
+
+echo "|0ROLL NO.|NAME|PROGRAM|DEPARTMENT|HOSTEL|EMAIL|BLOODGROUP|GENDER|COUNTRY|" >>Database.txt
+
 for branch in $branches;
 	do 
 		
@@ -34,14 +37,20 @@ for branch in $branches;
 
 							curl "https://oa.cc.iitk.ac.in/Oa/Jsp/OAServices/IITk_SrchRes.jsp?typ=stud&numtxt=${rollno}&sbm=Y" -o temp.txt
 
-							name=`grep -Eo -A1 "Name:" temp.txt|grep -Eov "Name:"|grep -Eo "[a-zA-Z \.]+"`
+							name=`grep -Eo -A1 "Name:" temp.txt|grep -Eov "Name:"|grep -Eo "[a-zA-Z ()\.]+"`
 							program=`grep -Eo -A1 "Program:" temp.txt|grep -Eov "Program:"|grep -Eo "[A-Za-z0-9 ()-]+"`
 							dept=` grep -Eo -A1 "Department:" temp.txt|grep -Eov "Department:"|grep -Eo "[A-Za-z &\.]+"`
 							hostel=`grep -Eo -A1 "Hostel Info:" temp.txt|grep -Eov "Hostel Info:"|grep -Eo "[A-Za-z ,-\d]+"`
 							email=`grep -E "E-Mail:" temp.txt|grep -Eo "\">.*iitk.ac.in"|grep -Eo "\w.*"`
+
+							if [[ -z $email ]]
+							then 
+									email="Not Available"
+							fi	
+
 							bloodgroup=`grep -Eo -A1 "Blood Group:" temp.txt|grep -Eov "Blood Group:"|grep -Eo "[A-Za-z +-]+"`
 							gender=`grep -Eo -A1 "Gender:" temp.txt|grep -Eov "Gender:"|grep -Eo "[A-Za-z]+"`
-							country=`grep -Eo -A1 "CountryOfOrigin:" temp.txt|grep -Eov "CountryOfOrigin:"|grep -Eo "[A-Za-z]+"`
+							country=`grep -Eo -A1 "CountryOfOrigin:" temp.txt|grep -Eov "CountryOfOrigin:"|grep -Eo "[A-Za-z ]+"`
 
 							echo "|$rollno|$name|$program|$dept|$hostel|$email|$bloodgroup|$gender|$country|" >>Database.txt
 							
@@ -54,5 +63,9 @@ for branch in $branches;
 		
 	done
 column -s"|" -t Database.txt>Stu_Database.txt
+touch Student_Database.txt
+
+sort Stu_Database.txt|uniq>Student_Database.txt
 rm Database.txt
 rm temp.txt
+rm Stu_Database.txt
