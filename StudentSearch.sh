@@ -37,8 +37,8 @@ for branch in $branches;
 
 							curl "https://oa.cc.iitk.ac.in/Oa/Jsp/OAServices/IITk_SrchRes.jsp?typ=stud&numtxt=${rollno}&sbm=Y" -o temp.txt
 
-							name=`grep -Eo -A1 "Name:" temp.txt|grep -Eov "Name:"|grep -Eo "[a-zA-Z ()\.]+"`
-							program=`grep -Eo -A1 "Program:" temp.txt|grep -Eov "Program:"|grep -Eo "[A-Za-z0-9 ()-]+"`
+							name=`grep -Eo -A1 "Name:" temp.txt|grep -Eov "Name:"|grep -Eo "[a-zA-Z0-9 -/()\.\`\\[]+"`
+							program=`grep -Eo -A1 "Program:" temp.txt|grep -Eov "Program:"|grep -Eo "[A-Za-z0-9 ()-\.]+"`
 							dept=` grep -Eo -A1 "Department:" temp.txt|grep -Eov "Department:"|grep -Eo "[A-Za-z &\.]+"`
 							hostel=`grep -Eo -A1 "Hostel Info:" temp.txt|grep -Eov "Hostel Info:"|grep -Eo "[A-Za-z ,-\d]+"`
 							email=`grep -E "E-Mail:" temp.txt|grep -Eo "\">.*iitk.ac.in"|grep -Eo "\w.*"`
