@@ -7,7 +7,8 @@ touch temp.txt
 touch Database.txt
 touch Stu_Database.txt
 
-echo "|0ROLL NO.|NAME|PROGRAM|DEPARTMENT|HOSTEL|EMAIL|BLOODGROUP|GENDER|COUNTRY|" >>Database.txt
+echo "|  0ROLL NO.#|  NAME#|  PROGRAM#|  DEPARTMENT#|  HOSTEL#|  EMAIL#|  BLOODGROUP#|  GENDER#|  COUNTRY#|" >>Database.txt
+
 
 for branch in $branches;
 	do 
@@ -52,7 +53,7 @@ for branch in $branches;
 							gender=`grep -Eo -A1 "Gender:" temp.txt|grep -Eov "Gender:"|grep -Eo "[A-Za-z]+"`
 							country=`grep -Eo -A1 "CountryOfOrigin:" temp.txt|grep -Eov "CountryOfOrigin:"|grep -Eo "[A-Za-z ]+"`
 
-							echo "|$rollno|$name|$program|$dept|$hostel|$email|$bloodgroup|$gender|$country|" >>Database.txt
+							echo "|  $rollno#|  $name#|  $program#|  $dept#|  $hostel#|  $email#|  $bloodgroup#|  $gender#|  $country#|" >>Database.txt
 							
 							
 						done
@@ -62,10 +63,9 @@ for branch in $branches;
 		fi	
 		
 	done
-column -s"|" -t Database.txt>Stu_Database.txt
+column -s"#" -t Database.txt>Stu_Database.txt
 touch Student_Database.txt
-
-sort Stu_Database.txt|uniq>Student_Database.txt
+sort Stu_Database.txt|uniq>>Student_Database.txt
 rm Database.txt
 rm temp.txt
 rm Stu_Database.txt

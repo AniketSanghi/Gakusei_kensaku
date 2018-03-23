@@ -19,40 +19,32 @@ do
 	printf "\e[96m	7.	BloodGroup\e[296m\n"
 	printf "\e[96m	8.	Gender\e[296m\n"
 	printf "\e[96m	9.	Country\e[296m\n\n"
-	printf "\e[93m  Enter your input as {optionnumber}.{value} \n        \e[293;34meg: 1.170110 (or) 2.Aniket  Sanghi (or) 3.BTech (or) 4.physics (or) 5.Hall5, C-208 (or) 6.sanghi (or) 7.O\+ (or) 8.M (or) 9.india\e[234m\n"
+	printf "\e[93m  Enter your '#' separated input as optionnumber~value \n        \e[293;34meg: 1~170110#2~Aniket Sanghi#3~BTech#4~Computer science#5~Hall5, C-208#6~sanghi#7~O\+#8~M#9~india\e[234m\n"
 	printf "\e[31m   	The match is not case sensitive match. But take care of format like in hostel name. \e[231m\n"
 
 	read data
-	b=`echo $data | grep -Eo "^\d"`
-	c=`echo $data | sed 's/^..//g'`
-	echo $b , $c 
+
+	roll=`echo "$data" | grep -Eo "1~[^#]+" | sed 's/^..//g'`
+	name=`echo "$data" | grep -Eo "2~[^#]+" | sed 's/^..//g'`
+	prog=`echo "$data" | grep -Eo "3~[^#]+" | sed 's/^..//g'`
+	dept=`echo "$data" | grep -Eo "4~[^#]+" | sed 's/^..//g'`
+	hostel=`echo "$data" | grep -Eo "5~[^#]+" | sed 's/^..//g'`
+	email=`echo "$data" | grep -Eo "6~[^#]+" | sed 's/^..//g'`
+	bldgrp=`echo "$data" | grep -Eo "7~[^#]+" | sed 's/^..//g'`
+	gender=`echo "$data" | grep -Eo "8~[^#]+" | sed 's/^..//g'`
+	country=`echo "$data" | grep -Eo "9~[^#]+" | sed 's/^..//g'`
+
 	printf "\e[35m__________________________________________________________________________________________________________________________________________________________________________________________\n"
 	printf "|                                                                                                                                            						  |\n"
 	printf "|                                                                                                                                            						  |\n"
-	printf "|\e[92;1mROLL NO.            NAME                         PROGRAM               DEPARTMENT               HOSTEL                  E-MAIL                        BLOODGROUP      GENDER     COUNTRY \e[0m\e[35m|\n"
+	printf "|\e[92;1mROLL NO.       NAME          PROGRAM           DEPARTMENT            HOSTEL           E-MAIL         BLOODGRP   GENDER  COUNTRY \e[0m\e[35m                                                         |\n"
 	printf "|                                                                                                                                            					    	  |\n"
 	printf "\e[35m|_________________________________________________________________________________________________________________________________________________________________________________________|\e[0m\e[93m\n\n"
 
-	if [[ $b = "1" ]]
+	if [[ $roll || $name || $prog || $dept  || $hostel  || $email || $bldgrp || $gender || $country ]]
 	then
-		grep -Ei "^$c" Student_Database.txt
-	elif [[ $b = "7" || $b = "9" || $b = "5" || $b = "3" || $b = "4" ]]
-	then
-		grep -Ei "$c" Student_Database.txt
-	elif [[ $b = "6" ]]
-	then		
-		grep -Ei "$c@iitk\.ac\.in" Student_Database.txt
-	elif [[ $b = "2" ]]
-	then		
-		grep -Ei "^(INT)?Y?\d+\s+$c" Student_Database.txt
-	elif [[ $b = "8" ]]
-	then		
-		grep -Ei "@iitk\.ac\.in\s+[A-Z+-]+\s+$c" Student_Database.txt
-	else
-		echo "Wrong format"
-							
-	fi
-	
+		grep -Ei "\|  $roll[^\|]*\|  $name[^\|]*\|  $prog[^\|]*\|  $dept[^\|]*\|  $hostel[^\|]*\|  $email[^\|]*\|  $bldgrp[^\|]*\|  $gender[^\|]*\|  $country[^\|]*\|" Student_Database.txt| tr -s " " | column -s"|" -t
+	fi	
 	printf "\n\n\e[31m  Do you want to search for more Students (y/n)\n"
 	read runagain
 	
