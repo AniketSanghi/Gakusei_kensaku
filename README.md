@@ -24,7 +24,7 @@ A Student Search ( Japenese- Gakusei kensaku ) of IIT Kanpur students made purel
 		chmod 755 DataScrap.sh
 		chmod 755 StudentSearch.sh
 		
-- Run the DataScrap.sh file: this will create the Database.txt file with the complete database. This is also avalible in my repository so you don't actually need to run this.
+- Run the DataScrap.sh file: this will create the Database.txt file with the complete database. This is also avalible in my repository so you don't actually need to run this. Can't see? You gotta Time Travel! If you know what I mean :P
 
 		./DataScrap.sh
 - Run your Student Search 
